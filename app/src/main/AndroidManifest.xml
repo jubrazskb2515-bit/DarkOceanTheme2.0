@@ -1,26 +1,28 @@
-plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-}
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://android.com">
 
-android {
-    namespace = "com.custom.darkglasswater"
-    compileSdk = 35
+    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="false"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
 
-    defaultConfig {
-        applicationId = "com.custom.darkglasswater"
-        minSdk = 26
-        targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
-    }
+    <application
+        android:theme="@android:style/Theme.Material.NoActionBar"
+        android:label="Dark Glass Water"
+        android:stateNotNeeded="true">
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:clearTaskOnLaunch="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.HOME"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
 
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-}
+    </application>
+</manifest>
