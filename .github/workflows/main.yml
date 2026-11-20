@@ -13,6 +13,38 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
+      - name: Auto-generate clean AndroidManifest.xml
+        run: |
+          mkdir -p app/src/main
+          python3 -c '
+          manifest = """<?xml version="1.0" encoding="utf-8"?>
+          <manifest xmlns:android="http://android.com">
+              <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="false"/>
+              <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+              <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
+              <application
+                  android:theme="@android:style/Theme.Material.NoActionBar"
+                  android:label="Dark Glass Water"
+                  android:stateNotNeeded="true">
+                  <activity
+                      android:name=".MainActivity"
+                      android:screenOrientation="portrait"
+                      android:launchMode="singleTask"
+                      android:clearTaskOnLaunch="true"
+                      android:exported="true">
+                      <intent-filter>
+                          <action android:name="android.intent.action.MAIN"/>
+                          <category android:name="android.intent.category.HOME"/>
+                          <category android:name="android.intent.category.DEFAULT"/>
+                          <category android:name="android.intent.category.LAUNCHER"/>
+                      </intent-filter>
+                  </activity>
+              </application>
+          </manifest>"""
+          with open("app/src/main/AndroidManifest.xml", "w") as f:
+              f.write(manifest)
+          '
+
       - name: Set up Java 17
         uses: actions/setup-java@v4
         with:
